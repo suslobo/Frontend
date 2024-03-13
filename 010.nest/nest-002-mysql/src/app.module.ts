@@ -9,6 +9,8 @@ import { AuthorController } from './author/author.controller';
 import { Category } from './category/category.model';
 import { Editorial } from './editorial/editorial.model';
 import { User } from './user/user.model';
+import { Reservation } from './reservation/reservation.model';
+import { ReservationController } from './reservation/reservation.controller';
 
 @Module({
   imports: [
@@ -19,14 +21,14 @@ import { User } from './user/user.model';
       username: 'root',
       password: 'admin',
       database: 'nest', // crear esta base de datos en MySQL primero
-      entities: [Book, Author, Category, Editorial, User],
+      entities: [Book, Author, Category, Editorial, User, Reservation],
       synchronize: true, // generar tablas en base de datos
       logging: true
     }),
-    TypeOrmModule.forFeature([Book, Author, Category, Editorial, User]) // Esto permite acceder a Repository
+    TypeOrmModule.forFeature([Book, Author, Category, Editorial, User, Reservation]) // Esto permite acceder a Repository
     
   ],
-  controllers: [AppController, BookController, AuthorController],
+  controllers: [AppController, BookController, AuthorController, ReservationController],
   providers: [AppService],
 })
 export class AppModule {}
