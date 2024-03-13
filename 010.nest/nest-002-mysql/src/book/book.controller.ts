@@ -55,6 +55,19 @@ export class BookController {
             }
         });
     }
+
+    // filtrar por categoría
+    @Get('filter-by-category-id/:id')
+    findByCategoryId(@Param('id', ParseIntPipe) id: number) {
+        return this.bookRepository.find({
+            where: {
+                categories: {
+                    id: id
+                }
+            }
+        });
+    }
+
             
     // flitrar por titulo
     @Get('filter-by-title/:title')
