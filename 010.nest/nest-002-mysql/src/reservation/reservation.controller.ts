@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Reservation } from './reservation.model';
 import { Repository } from 'typeorm';
@@ -19,7 +19,7 @@ export class ReservationController {
 
     // findById
     // http://localhost:3000/reservation/1
-        @Get(':id')
+        @Get('filter-by id/:id')
         findById(@Param('id', ParseIntPipe) id: number) {
             return this.reservationRepo.findOne({
                 where: {
@@ -55,8 +55,23 @@ export class ReservationController {
     }
 
     // query params
+    @Get('filter')
+    findWithFilter(@Query() filters: any) {
+        console.log(filters);
 
-    
+        // si está vacío devolver .find() sin filtro (aquí no hace falta)
+        // ejemplo: http://localhost:3000/reservation/filter
+        // if(Object.keys(filters).length === 0)
+           //  return this.reservationRepo.find();
+
+        // si no está vacio entonces filtrar:
+        // ejemplo: http://localhost:3000/reservation/filter?user.id=3&startDate=2024-01-01&price=244
+        return this.reservationRepo.find({
+            where: filters
+        });
+    }
+
+
 
     // create nueva reserva
     @Post()
