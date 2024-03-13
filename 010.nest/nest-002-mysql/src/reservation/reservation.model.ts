@@ -19,12 +19,12 @@ export class Reservation {
 
     // asociación con usuario
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, {eager: true}) // para que en el postman te traiha el book y el usuario
     user: User;
 
     // asociación con book
-    
-    @ManyToOne(() => Book)
+
+    @ManyToOne(() => Book, {eager: true}) // para que en el postman te traiha el book y el usuario
     book: Book;
 
 
