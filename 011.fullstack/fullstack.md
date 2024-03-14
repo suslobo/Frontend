@@ -10,9 +10,9 @@
 
 ## frontend
 * crear interfaces con todos los model.ts
-* crear componentes: home, navbar, footer, book-list, book-detail, book-form
+* crear componentes: home, navbar, footer, book-list, book-detail, book-form (ng generate component home, etc)
 * enrutado app.routes.ts
-* desarrollar los componentes:
+* desarrollar los componentes: 
     * book-list conectado a backend nestjs
     * book-detail conectado a backend nestjs
     * book-form conectado a backend nestjs
