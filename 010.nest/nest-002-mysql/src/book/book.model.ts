@@ -7,31 +7,35 @@ import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, Ma
 @Entity()
 export class Book {
 
-    @ApiProperty({example: 1})
+    @ApiProperty()
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ApiProperty({example: "Libro 1"})
+    @ApiProperty()
     @Column()
     title: string;
 
-    @ApiProperty({example: "11111111111"})
+    @ApiProperty()
     @Column({unique: true, length: 13})
     isbn: string;
 
-    @ApiProperty({example: "555"})
+    @ApiProperty()
     @Column({name: 'pages', type: 'int', unsigned: true, default: 0})
     numPages: number;
 
+    @ApiProperty()
     @CreateDateColumn()
     createdDate: Date;
 
+    @ApiProperty()
     @UpdateDateColumn()
     updateDate: Date;
 
+    @ApiProperty()
     @Column({type: 'boolean', default: false}) // en MySQL aparecerá como 0 o 1
     published: boolean;
 
+    @ApiProperty()
     @Column({type: 'decimal', precision: 14, scale: 2})
     price: number;
 
@@ -45,13 +49,17 @@ export class Book {
         //DESACONSEJADO en app grandes
     // eager false hace que no se traiga la asociación. 
         //RECOMENDADO en app grandes para optimizar consultas
+    
+    @ApiProperty({example: {id: 1}})
     @ManyToOne(() => Author, {eager: true}) 
     author: Author;
 
+    @ApiProperty({example: {id: 1}})
     @ManyToOne(() => Editorial, {eager: true})
     @JoinColumn({name: 'id_editorial'}) // opcional, cambia el nombre en la columna de la base de datos
     eidtorial: Editorial;
 
+    @ApiProperty({example: [{id: 1}]})
     @ManyToMany(() => Category, {eager: true}) // de muchos a muchos
     @JoinTable()
     categories: Category[]; // varias categorias
