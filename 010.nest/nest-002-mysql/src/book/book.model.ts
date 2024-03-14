@@ -15,9 +15,11 @@ export class Book {
     @Column()
     title: string;
 
+    @ApiProperty({example: "11111111111"})
     @Column({unique: true, length: 13})
     isbn: string;
 
+    @ApiProperty({example: "555"})
     @Column({name: 'pages', type: 'int', unsigned: true, default: 0})
     numPages: number;
 
