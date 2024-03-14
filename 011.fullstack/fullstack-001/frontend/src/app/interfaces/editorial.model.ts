@@ -3,4 +3,4 @@ export interface Editorial {
     name: string;
     cif: string;
     year: number;
-}
+  }

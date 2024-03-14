@@ -32,35 +32,32 @@ export class Book {
     updateDate: Date;
 
     @ApiProperty()
-    @Column({type: 'boolean', default: false}) // en MySQL aparecerá como 0 o 1
+    @Column({type: 'boolean', default: false}) // En MySQL aparecerá como 0 o 1
     published: boolean;
 
     @ApiProperty()
     @Column({type: 'decimal', precision: 14, scale: 2})
     price: number;
 
+    // Asociaciones: ManyToOne, Many To Many
+    // @ManyToOne(() => Author)
+    // eager: true hace que traiga la asociación en las consultas. 
+        // DESACONSEJADO en aplicaciones grandes
 
-    // asociaciones: ManyToOne,  ManyToMany
-    // estamos asociando con Author. En mysql se ha creado una nueva columna authorId
-    // @ManyToOne(() => Author) 
-    // author: Author;
-
-    // eager true hace que traiga la asociacion en las consultas. 
-        //DESACONSEJADO en app grandes
-    // eager false hace que no se traiga la asociación. 
-        //RECOMENDADO en app grandes para optimizar consultas
-    
+    // eager: false hace no que no traiga la asociación, 
+        // RECOMENDADO en aplicaciones grandes para optimizar consultas
     @ApiProperty({example: {id: 1}})
-    @ManyToOne(() => Author, {eager: true}) 
+    @ManyToOne(() => Author, { eager: true })
     author: Author;
 
     @ApiProperty({example: {id: 1}})
     @ManyToOne(() => Editorial, {eager: true})
-    @JoinColumn({name: 'id_editorial'}) // opcional, cambia el nombre en la columna de la base de datos
-    eidtorial: Editorial;
+    @JoinColumn({name: 'id_editorial'}) // opcional, cambia el nombre
+    editorial: Editorial;
 
     @ApiProperty({example: [{id: 1}]})
-    @ManyToMany(() => Category, {eager: true}) // de muchos a muchos
+    @ManyToMany(() => Category, { eager: true })
     @JoinTable()
-    categories: Category[]; // varias categorias
+    categories: Category[]; // varias categorías
+
 }

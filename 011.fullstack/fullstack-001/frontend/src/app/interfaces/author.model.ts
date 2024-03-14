@@ -4,4 +4,4 @@ export interface Author {
     lastName: string;
     birthDate: Date;
     salary: number;
-}
+  }

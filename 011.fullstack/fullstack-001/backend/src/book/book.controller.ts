@@ -1,16 +1,13 @@
 import { Body, ConflictException, Controller, Delete, Get, NotFoundException, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Book } from './book.model';
-import { Between, Repository } from 'typeorm';
-import { get } from 'http';
-import { identity } from 'rxjs';
+import { Between, Repository, UpdateDateColumn } from 'typeorm';
 
 @Controller('book')
 export class BookController {
 
     // Crear constructor e inyectar Repository<Book> para acceso a base de datos
     constructor(
-
         @InjectRepository(Book) private bookRepository: Repository<Book>
     ) {}
     
@@ -19,46 +16,47 @@ export class BookController {
     findAll() {
         return this.bookRepository.find();
     }
-    // para buscar por id
-    @Get(':id')
-    findById(@Param('id', ParseIntPipe) id: number){
+
+    @Get(':id') // :id es una variable, parámetro en la url
+    findById( @Param('id', ParseIntPipe) id: number ) {
         return this.bookRepository.findOne({
             // relations: {
-                // author: true // en la consulta le estás diciendo que quieres el author
-            //},
+            //    author: true
+            // },
             where: {
                 id: id
             }
         });
     }
-    // PARA TRAÉME TODAS LAS RESERVAS DE ESTE USUARIO, PARA TRAER TODOS LOS COMENTARIOS DE UN USUARIO
-    // filtrar libros por autor
-    // sirve para la pantalla de author-detail para mostrar los libros del author
+
+    // Sirve para la pantalla de author-detail para mostrar los libros del autor
+    // Filtrar libros por autor
     @Get('filter-by-author/:id')
-    findByAuthorId(@Param('id', ParseIntPipe) id: number) {
+    findByAuthorId(@Param('id', ParseIntPipe) id:number) {
         return this.bookRepository.find({
             where: {
                 author: {
-                    id: id
-                } 
-            }
-        });
-    }
-    // filtrar por editorial
-    @Get('filter-by-editorial/:id')
-    findByEditorialId(@Param('id', ParseIntPipe) id: number) {
-        return this.bookRepository.find({
-            where: {
-                eidtorial: {
                     id: id
                 }
             }
         });
     }
 
-    // filtrar por categoría
+    // filtrar por editorial
+    @Get('filter-by-editorial/:id')
+    findByEditorialId(@Param('id', ParseIntPipe) id:number) {
+        return this.bookRepository.find({
+            where: {
+                editorial: {
+                    id: id
+                }
+            }
+        });
+    }
+
+    // Filtrar por categoría
     @Get('filter-by-category-id/:id')
-    findByCategoryId(@Param('id', ParseIntPipe) id: number) {
+    findByCategoryId(@Param('id', ParseIntPipe) id:number) {
         return this.bookRepository.find({
             where: {
                 categories: {
@@ -68,18 +66,16 @@ export class BookController {
         });
     }
 
-            
-    // flitrar por titulo
+
     @Get('filter-by-title/:title')
     findByTitle(@Param('title') title: string) {
         return this.bookRepository.find({
             where: {
-                title: title // Coinicidencia exacta. Los títulos deben ser iguales
+                title: title // coincidencia exacta, los títulos deben ser iguales
             }
         });
     }
 
-    // filtro por boolean. Por ejemplo Libros activos published
     @Get('published/true')
     findByPublishedTrue() {
         return this.bookRepository.find({
@@ -89,9 +85,8 @@ export class BookController {
         });
     }
 
-    // filtrar por precio
     @Get('filter-by-price/:min/:max')
-    findByBetweenMinAndMax(
+    findByPriceBetweenMinAndMax(
         @Param('min', ParseIntPipe) min: number,
         @Param('max', ParseIntPipe) max: number
     ) {
@@ -102,46 +97,52 @@ export class BookController {
         });
     }
 
-    // create sería con POST
     @Post()
     create(@Body() book: Book) {
-        return this.bookRepository.save(book); // save nos sirve para guardar
+        return this.bookRepository.save(book);
     }
 
-    // actualizar
+    // async viene de asíncrono, para poder ejecutar await
     @Put(':id')
-    // este método no devuelve un valor, devuelve una promesa
-    async update( // async es para ejuctar await
+    async update(
         @Param('id', ParseIntPipe) id: number,
         @Body() book: Book
-    ) {
-        const exist = await this.bookRepository.existsBy({ // await espera a que termine el metodo existBy
-            id: id // devuelve un booleano. Primero mira a ver si existe 
-        });
-        if(!exist) { // si el libro no existe lanza una excepcion de tipo not found
-            throw new NotFoundException('Book not found');
-        }
-            return this.bookRepository.save(book); // si sí existe vamos a guardarlo
+        ) {
+            
+            // await espera a que el método existsBy termine ya que devuelve Promise<boolean>
+            const exists = await this.bookRepository.existsBy({
+               id: id
+            });
+
+            if(!exists) {
+                throw new NotFoundException('Book not found');
+            }
+
+            return this.bookRepository.save(book);
+
     }
 
-    // borrar
+    // Delete
     @Delete(':id')
     async deleteById(
-        @Param('id', ParseIntPipe) id: number,
+        @Param('id', ParseIntPipe) id: number
     ) {
+
         const exists = await this.bookRepository.existsBy({
             id: id
-        })
+         });
 
-        if(!exists) {
-            throw new NotFoundException('Book not found')
-        }
-        
+         if(!exists) {
+             throw new NotFoundException('Book not found');
+         }
+
         try {
             this.bookRepository.delete(id);
         } catch (error) {
-            throw new ConflictException('No se puede borrar');
+            throw new ConflictException('No se puede borrar.');
         }
+        
     }
+
 
 }
