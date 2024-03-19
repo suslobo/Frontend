@@ -22,6 +22,12 @@
 * category detail mostrado libros (findById)
     * ng generate component category-detail
     * CategoryController findById
+
+* poder reservar un libro
+    * añadir boton reservar libro en book-list
+    * ng generate component reservation-form
+    * enrutar
+
     
 * añadir modal de confirmación antes de acciones
 

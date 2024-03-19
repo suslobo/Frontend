@@ -6,6 +6,6 @@ export interface Reservation {
   startDate: Date;
   endDate: Date;
   price: number;
-  user: User;
-  book: Book;
+  user?: User;
+  book?: Book;
 }
