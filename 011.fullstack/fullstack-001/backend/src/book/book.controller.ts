@@ -148,12 +148,12 @@ export class BookController {
             });
             book.published = false;
             await this.bookRepository.save(book);
-            
+
         } catch (error) {
             console.log("Error al borrar el liebro");
             throw new ConflictException('No se puede borrar.');
         }
     }
-
+        
 
 }
