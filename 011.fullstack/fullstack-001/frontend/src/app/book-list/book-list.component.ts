@@ -32,4 +32,8 @@ export class BookListComponent implements OnInit {
       this.loadBooks();
     });
   }
+
+  closeMessage() { // convierte el booleano en falso
+    this.showDeletedMessage = false;
+  }
 }

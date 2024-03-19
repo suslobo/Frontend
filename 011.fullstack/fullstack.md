@@ -16,3 +16,11 @@
     * book-list conectado a backend nestjs
     * book-detail conectado a backend nestjs
     * book-form conectado a backend nestjs
+
+* Añadir botón reservar libro en book-list
+
+* Pantalla reserva de libro
+
+* Mostrar libros filtrados por categoría
+
+* Mostrar libros filtrados por autor 
