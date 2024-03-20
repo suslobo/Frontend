@@ -10,8 +10,13 @@
           <br>
           El libro será enviado en las próximas horas.
           <br>
-          El código de tu reserva es: {{reservation?.id}} <!-- en señar el id por pantalla-->
+          El código de tu reserva es: {{reservation?.id}}
+          <br>
+          Para cualquier duda, contacte con soporte en soporte&commat;certidevs.com
+          <!-- Ver referencias caracter en:
+          https://html.spec.whatwg.org/multipage/named-characters.html -->
         </ngb-alert>
+
         <button class="w-100 btn btn-primary btn-lg" routerLink="/books">Volver a libros</button> <!--botón para volver al listado de libros-->
 
       } @else {
