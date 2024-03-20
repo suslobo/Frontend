@@ -21,6 +21,7 @@ export class ReservationFormComponent implements OnInit{
   numDays = 0;
   // para que salga pantalla de confirmación NgbAlbert y showConfirmMessage
   showConfirmMessage: boolean = false; // cuando se envíe al backen pasará a ser true
+  reservation: Reservation | undefined;
 
   reservationForm = new FormGroup({
     startDate: new FormControl<Date>(new Date()),
@@ -97,7 +98,7 @@ export class ReservationFormComponent implements OnInit{
     .subscribe(reservation => {
       console.log(reservation);
       this.showConfirmMessage = true;
-
+      this.reservation = reservation;
     });
 
   }
