@@ -28,8 +28,8 @@
 * Poder reservar un libro
     * [OK] Añadir botón reservar libro en book-list
     * [OK] ng generate component reservation-form
-    *  [OK]Enrutar el componente
-    * TS y HTML utilizando el ejemplo bootstrap "checkout"
+    * [OK] Enrutar el componente
+    * [OK] TS y HTML utilizando el ejemplo bootstrap "checkout"
 
 
 
