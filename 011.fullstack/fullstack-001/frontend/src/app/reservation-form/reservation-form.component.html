@@ -2,14 +2,14 @@
 <div class="container"></div>
 <div class="row">
     <div class="col-lg-8">
-        <form class="mt-5"
+        <form class="mt-5 p-5"
         [formGroup]="reservationForm"
         (ngSubmit)="save()">
 
             <div class="form-floating mb-3">
                 <input type="date" class="form-control"
                 id="startDate" formControlName="startDate"
-                placeholder="yyyy-mm-dd">
+                placeholder="yyyy-mm-dd" (change)="calculatePrice()">
                 <label for="startDate">Fecha de inicio</label>
           </div>
           <div class="form-floating mb-3">
@@ -18,13 +18,20 @@
             placeholder="yyyy-mm-dd" (change)="calculatePrice()">
             <label for="endDate">Fecha fin</label>
         </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox"
+          id="premiumShip" formControlName="premiumShip" (change)="calculatePrice()">
+          <label class="form-check-label" for="premiunShip">Envío premium 4,99 € (menos de 24 horas)</label>
+
+        </div>
+
         </form>
     </div>
 
     <div class="col-md-5 col-lg-4 order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mt-5 d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Tu reserva</span>
-          <span class="badge bg-primary rounded-pill">3 días</span>
+          <span class="badge bg-primary rounded-pill">{{numDays}} días</span>
         </h4>
         <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between lh-sm">

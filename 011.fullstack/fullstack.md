@@ -17,24 +17,26 @@
     * book-detail conectado a backend nestjs
     * book-form conectado a backend nestjs
 
-* mostrar mensaje de borrado correctamente
 
-* category detail mostrado libros (findById)
+
+* [OK] Mostrar mensaje de borrado correctamente en book-list
+
+* [OK] category detail mostrando libros
     * ng generate component category-detail
     * CategoryController findById
 
-* poder reservar un libro
-    * añadir boton reservar libro en book-list
-    * ng generate component reservation-form
-    * enrutar
+* Poder reservar un libro
+    * [OK] Añadir botón reservar libro en book-list
+    * [OK] ng generate component reservation-form
+    *  [OK]Enrutar el componente
+    * TS y HTML utilizando el ejemplo bootstrap "checkout"
 
-    
-* añadir modal de confirmación antes de acciones
 
-* Añadir botón reservar libro en book-list
+
+
+* Añadir modal de confirmación antes de acciones
+
 
 * Pantalla reserva de libro
 
-* Mostrar libros filtrados por categoría
-
-* Mostrar libros filtrados por autor 
+* Mostrar libros filtrados por autor
