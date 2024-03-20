@@ -90,8 +90,6 @@ export class ReservationFormComponent implements OnInit{
       endDate: this.reservationForm.get('endDate')?.value ?? new Date(),
       price: this.price,
       book: this.book
-
-
     };
 
     // envíar al backend con método POST
