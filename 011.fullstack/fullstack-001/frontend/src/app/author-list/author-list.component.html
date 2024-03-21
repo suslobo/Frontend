@@ -11,13 +11,15 @@
             <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">{{author.firstName}} {{author.lastName}}</h3>
             <ul class="d-flex list-unstyled mt-auto">
               <li class="me-auto">
-                <button class="btn btn-primary btn-sm" [routerLink]="['/authors', author.id, 'detail']">Ver libros</button>
+                <button class="btn btn-primary btn-sm" [routerLink]="['/authors', author.id, 'detail']">Ver 
+                    <i class="bi bi-arrow-right"></i>
+                </button>
               </li>
-              <li class="d-flex align-items-center me-3">
+              <!-- <li class="d-flex align-items-center me-3">
                 <small>{{author.birthDate | date: 'dd//MM//yyyy'}}</small>
-              </li>
+              </li> -->
               <li class="d-flex align-items-center">
-                <i class="bi bi-geo-alt-fill"></i>
+                <i class="bi bi-geo-alt-fill fs-3 me-2"></i>
                 <small>{{author.salary}}</small>
               </li>
             </ul>

@@ -19,6 +19,7 @@ Próximamente:
 * book-form
 
 * Subir una imagen en un form
+    * ng generate component author-form
 
 * author-list con diseño de cards (booststrap)
     * ng generate component author-list
