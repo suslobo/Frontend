@@ -17,4 +17,16 @@ export class Author{
 
     @Column()
     salary: number;
+
+    @Column()
+    country: string
+
+    @Column()
+    photoUrl: string;
+
+    @Column({length: 3000})
+    bio: string;
+
+    @Column()
+    wikipediaUrl: string;
 }
