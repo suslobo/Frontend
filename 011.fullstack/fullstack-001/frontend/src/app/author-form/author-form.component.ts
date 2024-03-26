@@ -13,18 +13,18 @@ import { Author } from '../interfaces/author.model';
 })
 export class AuthorFormComponent implements OnInit{
 
-  // formulario
   authorForm = new FormGroup({
     id: new FormControl(0),
     firstName: new FormControl(''),
     lastName: new FormControl(''),
-    birthDate: new FormControl(new Date()),
+    birthDate: new FormControl(),
     salary: new FormControl(0.0),
     photoUrl: new FormControl(''),
     country: new FormControl(''),
     bio: new FormControl(''),
     wikipediaUrl: new FormControl('')
   });
+
   photoFile: File | undefined;
   photoPreview: string | undefined;
 
@@ -52,7 +52,7 @@ export class AuthorFormComponent implements OnInit{
   save() {
 
     console.log(this.photoFile);
-    
+
     let formData = new FormData();
 
     if(this.photoFile) // si existe foto la añado
@@ -60,25 +60,28 @@ export class AuthorFormComponent implements OnInit{
 
     formData.append('firstName', this.authorForm.get('firstName')?.value ?? '');
     formData.append('lastName', this.authorForm.get('lastName')?.value ?? '');
-    // para convertir el birthDate en string
+
     const birthDate = this.authorForm.get('birthDate')?.value;
     if(birthDate){
-      const birthDateStr = birthDate.toISOString();
-      formData.append('birthDate', birthDateStr);
+      console.log(birthDate);
+      console.log(typeof birthDate);
+      formData.append('birthDate', birthDate);
     }
-    // para convertir de number a string
+
+    // + '' Para conversión implítica de number a string
     formData.append('salary', this.authorForm.get('salary')?.value + '');
+
     formData.append('country', this.authorForm.get('country')?.value ?? '');
     formData.append('bio', this.authorForm.get('bio')?.value ?? '');
     formData.append('wikipediaUrl', this.authorForm.get('wikipediaUrl')?.value ?? '');
-    
+
     this.httpClient.post('http://localhost:3000/author', formData)
     .subscribe(author => {
       this.photoFile = undefined;
       this.photoPreview = undefined;
       console.log(author);
 
-    })
+    });
 
   }
 

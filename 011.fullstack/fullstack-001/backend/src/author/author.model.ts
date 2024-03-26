@@ -6,27 +6,27 @@ export class Author{
     @PrimaryGeneratedColumn () // para que el id se genere automáticamente
     id: number;
 
-    @Column()
+    @Column({nullable: true}) // nombre opcional
     firstName: string;
 
-    @Column()
+    @Column({nullable: true})
     lastName: string;
 
-    @Column({type: 'date'}) // sin hora ni minuto
+    @Column({type: 'date', nullable: true}) // sin hora ni minuto
     birthDate: Date;
 
-    @Column()
+    @Column({nullable: true})
     salary: number;
 
-    @Column()
+    @Column({nullable: true})
     country: string
 
-    @Column()
+    @Column({nullable: true})
     photoUrl: string;
 
     @Column({length: 3000})
     bio: string;
 
-    @Column()
+    @Column({nullable: true})
     wikipediaUrl: string;
 }

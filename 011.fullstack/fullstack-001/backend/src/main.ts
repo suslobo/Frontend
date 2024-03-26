@@ -11,10 +11,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  // configurar carpeta para subida de imágenes/archivos desde un controlador
-  // http://localhost:3000/uploads/nombrearchivo.png por ejemplo
+  // Configurar carpeta para subida imágenes/archivos
+  // http://localhost:3000/uploads/1f82d390-d902-4aed-ad23-d543f56f2433.png
   app.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
-
+  
   await app.listen(3000);
 }
 bootstrap();
