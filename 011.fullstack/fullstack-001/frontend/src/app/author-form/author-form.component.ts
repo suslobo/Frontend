@@ -59,10 +59,19 @@ export class AuthorFormComponent implements OnInit{
       formData.append('file', this.photoFile);
 
     formData.append('firstName', this.authorForm.get('firstName')?.value ?? '');
-    // formData.append('lastName', this.authorForm.get('lastName')?.value ?? '');
+    formData.append('lastName', this.authorForm.get('lastName')?.value ?? '');
+    // para convertir el birthDate en string
+    const birthDate = this.authorForm.get('birthDate')?.value;
+    if(birthDate){
+      const birthDateStr = birthDate.toISOString();
+      formData.append('birthDate', birthDateStr);
+    }
+    // para convertir de number a string
+    formData.append('salary', this.authorForm.get('salary')?.value + '');
+    formData.append('country', this.authorForm.get('country')?.value ?? '');
+    formData.append('bio', this.authorForm.get('bio')?.value ?? '');
+    formData.append('wikipediaUrl', this.authorForm.get('wikipediaUrl')?.value ?? '');
     
-
-
     this.httpClient.post('http://localhost:3000/author', formData)
     .subscribe(author => {
       this.photoFile = undefined;
