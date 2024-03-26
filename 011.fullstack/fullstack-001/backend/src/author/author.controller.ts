@@ -1,7 +1,8 @@
-import { Body, ConflictException, Controller, Delete, Get, NotFoundException, Param, ParseFloatPipe, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { Body, ConflictException, Controller, Delete, Get, NotFoundException, Param, ParseFloatPipe, ParseIntPipe, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { Author } from './author.model';
 import { MoreThanOrEqual, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('author')
 export class AuthorController {
@@ -53,6 +54,21 @@ export class AuthorController {
                 salary: "DESC" // descendente
             }
         });
+    }
+
+    // npm i -D @types/multer
+    @Post()
+    @UseInterceptors(FileInterceptor('file'))
+    async create(@UploadedFile() file: Express.Multer.File, @Body() author: Author) {
+
+        console.log(file);
+        console.log(author);
+
+        // si hay archuivo, entonces guardaremos el archivo y obtendremos la url
+        if (file) {
+
+        }
+
     }
 
 

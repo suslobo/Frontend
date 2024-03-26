@@ -1,19 +1,17 @@
-import { formatNumber } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Author } from '../interfaces/author.model';
-import { read } from '@popperjs/core';
 
 @Component({
   selector: 'app-author-form',
   standalone: true,
-  imports: [RouterLink, HttpClientModule, ReactiveFormsModule],
+  imports: [HttpClientModule, ReactiveFormsModule, RouterLink],
   templateUrl: './author-form.component.html',
   styleUrl: './author-form.component.css'
 })
-export class AuthorFormComponent implements OnInit {
+export class AuthorFormComponent implements OnInit{
 
   authorForm = new FormGroup({
     id: new FormControl(0),
@@ -22,11 +20,12 @@ export class AuthorFormComponent implements OnInit {
     // birthDate: new FormControl(new Date()),
     // salary: new FormControl(0.0),
     // photoUrl: new FormControl(''),
-    // country: new FormControl(''),
-
+    // country: new FormControl('')
   });
   photoFile: File | undefined;
   photoPreview: string | undefined;
+
+  constructor(private httpClient: HttpClient) {}
 
   ngOnInit(): void {
 
@@ -39,29 +38,33 @@ export class AuthorFormComponent implements OnInit {
     if (target.files !== null && target.files.length > 0) {
       this.photoFile = target.files[0]; // extraer el primer archivo
 
-      // Opcional: mostrar imgagen por pantalla para previsualizarla antes de subirla
-      // se hace una variable photoPreview
+      // Opcional: Mostrar la imagen por pantalla para previsualizarla antes de subirla
       let reader = new FileReader();
       reader.onload = event => this.photoPreview = reader.result as string;
-      reader. readAsDataURL(this.photoFile);
+      reader.readAsDataURL(this.photoFile);
     }
+
   }
 
   save() {
-    
-    const author: Author = {
-      id: 0,
-      firstName: '',
-      lastName: '',
-      birthDate: new Date(),
-      salary: 0,
-      photoUrl: '',
-      country: '',
-      bio: '',
-      wikipediaUrl: '',
-    };
-    console.log(author);
+
     console.log(this.photoFile);
+    
+    let formData = new FormData();
+
+    if(this.photoFile) // si existe foto la añado
+      formData.append('file', this.photoFile);
+
+    formData.append('firstName', this.authorForm.get('firstName')?.value ?? '');
+
+    this.httpClient.post('http://localhost:3000/author', formData)
+    .subscribe(author => {
+      this.photoFile = undefined;
+      this.photoPreview = undefined;
+      console.log(author);
+
+    })
+
   }
 
 }
