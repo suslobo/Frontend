@@ -13,14 +13,17 @@ import { Author } from '../interfaces/author.model';
 })
 export class AuthorFormComponent implements OnInit{
 
+  // formulario
   authorForm = new FormGroup({
     id: new FormControl(0),
     firstName: new FormControl(''),
-    // lastName: new FormControl(''),
-    // birthDate: new FormControl(new Date()),
-    // salary: new FormControl(0.0),
-    // photoUrl: new FormControl(''),
-    // country: new FormControl('')
+    lastName: new FormControl(''),
+    birthDate: new FormControl(new Date()),
+    salary: new FormControl(0.0),
+    photoUrl: new FormControl(''),
+    country: new FormControl(''),
+    bio: new FormControl(''),
+    wikipediaUrl: new FormControl('')
   });
   photoFile: File | undefined;
   photoPreview: string | undefined;
@@ -56,6 +59,9 @@ export class AuthorFormComponent implements OnInit{
       formData.append('file', this.photoFile);
 
     formData.append('firstName', this.authorForm.get('firstName')?.value ?? '');
+    // formData.append('lastName', this.authorForm.get('lastName')?.value ?? '');
+    
+
 
     this.httpClient.post('http://localhost:3000/author', formData)
     .subscribe(author => {

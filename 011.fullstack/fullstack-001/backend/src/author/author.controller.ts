@@ -61,15 +61,14 @@ export class AuthorController {
     @UseInterceptors(FileInterceptor('file'))
     async create(@UploadedFile() file: Express.Multer.File, @Body() author: Author) {
 
-        console.log(file);
-        console.log(author);
-
-        // si hay archuivo, entonces guardaremos el archivo y obtendremos la url
+        // si hay archivo, entonces guardaremos el archivo y obtendremos la url
         if (file) {
 
             // guardar el archivo y obtener la url
             author.photoUrl = file.filename;
         }
+
+        console.log(author);
         
         return await this.authorRepo.save(author);
 
