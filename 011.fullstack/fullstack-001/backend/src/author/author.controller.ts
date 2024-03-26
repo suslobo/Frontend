@@ -67,7 +67,11 @@ export class AuthorController {
         // si hay archuivo, entonces guardaremos el archivo y obtendremos la url
         if (file) {
 
+            // guardar el archivo y obtener la url
+            author.photoUrl = file.filename;
         }
+        
+        return await this.authorRepo.save(author);
 
     }
 
