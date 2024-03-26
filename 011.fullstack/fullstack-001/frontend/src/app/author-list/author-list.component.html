@@ -12,8 +12,11 @@
             <ul class="d-flex list-unstyled mt-auto">
               <li class="me-auto">
                 <button class="btn btn-primary btn-sm" [routerLink]="['/authors', author.id, 'detail']">Ver 
-                    <i class="bi bi-arrow-right"></i>
+                    <i class="bi bi-eye"></i>
                 </button>
+                <button class="btn btn-primary btn-sm" [routerLink]="['/authors', author.id, 'update']">Editar 
+                  <i class="bi bi-pencil"></i>
+              </button>
               </li>
               <!-- <li class="d-flex align-items-center me-3">
                 <small>{{author.birthDate | date: 'dd//MM//yyyy'}}</small>
