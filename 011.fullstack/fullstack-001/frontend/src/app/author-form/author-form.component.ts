@@ -45,19 +45,8 @@ export class AuthorFormComponent implements OnInit{
       this.httpClient.get<Author>(`http://localhost:3000/author/${id}`).subscribe(author => {
         this.isUpdate = true;
         this.author = author;
-        this.authorForm.reset({
-          id: author.id,
-          firstName: author.firstName,
-          lastName: author.lastName,
-          birthDate: author.birthDate,
-          bio: author.bio,
-          country: author.country,
-          photoUrl: author.photoUrl,
-          salary: author.salary,
-          wikipediaUrl: author.wikipediaUrl
-        });
-        // si los nombres de los atributos del objeto author coninciden con los del formulario se cargar así
-        // this.authorForm.reset(author); 
+        // Si los nombres de los atributos del objeto author coinciden con los del formulario se puede cargar así:
+        this.authorForm.reset(author);
       });
 
     });
@@ -80,55 +69,36 @@ export class AuthorFormComponent implements OnInit{
 
   save() {
 
-    console.log(this.photoFile);
-
     let formData = new FormData();
-
     formData.append('id', this.authorForm.get('id')?.value ?? 0);
-
-    if(this.photoFile) // si existe foto la añado
-      formData.append('file', this.photoFile);
-
     formData.append('firstName', this.authorForm.get('firstName')?.value ?? '');
     formData.append('lastName', this.authorForm.get('lastName')?.value ?? '');
-    // agregar foto existente en caso de estar editando un autro para no perder la foto que ya tiene
-    formData.append('photoUrl', this.authorForm.get('photoUrl')?.value ?? '');
-
-
-    const birthDate = this.authorForm.get('birthDate')?.value;
-    if(birthDate){
-      console.log(birthDate);
-      console.log(typeof birthDate);
-      formData.append('birthDate', birthDate);
-    }
-
-    // + '' Para conversión implícita de number a string
-    formData.append('salary', this.authorForm.get('salary')?.value + '');
-
+    formData.append('photoUrl', this.authorForm.get('photoUrl')?.value ?? ''); // Conservar photoUrl para no perder foto
+    formData.append('birthDate', this.authorForm.get('birthDate')?.value ?? '');
+    formData.append('salary', this.authorForm.get('salary')?.value + ''); // + '' Para conversión implítica de number a string
     formData.append('country', this.authorForm.get('country')?.value ?? '');
     formData.append('bio', this.authorForm.get('bio')?.value ?? '');
     formData.append('wikipediaUrl', this.authorForm.get('wikipediaUrl')?.value ?? '');
 
+    if(this.photoFile) formData.append('file', this.photoFile);
+
     if(this.isUpdate) {
       const id =  this.authorForm.get('id')?.value;
       this.httpClient.put<Author>('http://localhost:3000/author/' + id, formData)
-      .subscribe(author => {
-        this.photoFile = undefined;
-        this.photoPreview = undefined;
-        this.author = author;
-      });
+        .subscribe(author => {
+          this.photoFile = undefined;
+          this.photoPreview = undefined;
+          this.author = author;
+        });
 
     } else {
       this.httpClient.post<Author>('http://localhost:3000/author', formData)
-      .subscribe(author => {
-        this.photoFile = undefined;
-        this.photoPreview = undefined;
-        this.author = author;
-
-      });
+        .subscribe(author => {
+          this.photoFile = undefined;
+          this.photoPreview = undefined;
+          this.author = author;
+        });
     }
-
-
   }
 
 }
