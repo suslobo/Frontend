@@ -14,6 +14,8 @@ import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import { extname } from 'path';
+import { Rating } from './rating/rating.model';
+import { RatingController } from './rating/rating.controller';
 
 @Module({
   imports: [
@@ -36,14 +38,14 @@ import { extname } from 'path';
       username: 'root',
       password: 'admin',
       database: 'nest', // crear esta base de datos en MySQL primero
-      entities: [Book, Author, Category, Editorial, User, Reservation],
+      entities: [Book, Author, Category, Editorial, User, Reservation, Rating],
       synchronize: true, // generar tablas en base de datos
       logging: true
     }),
-    TypeOrmModule.forFeature([Book, Author, Category, Editorial, User, Reservation]) // Esto permite acceder a Repository
+    TypeOrmModule.forFeature([Book, Author, Category, Editorial, User, Reservation, Rating]) // Esto permite acceder a Repository
     
   ],
-  controllers: [BookController, AuthorController, ReservationController, CategoryController],
+  controllers: [BookController, AuthorController, ReservationController, CategoryController, RatingController],
   providers: [],
 })
 export class AppModule {}
