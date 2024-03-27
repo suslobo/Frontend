@@ -14,13 +14,12 @@ import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './reservation-form.component.html',
   styleUrl: './reservation-form.component.css'
 })
-export class ReservationFormComponent implements OnInit{
+export class ReservationFormComponent implements OnInit {
 
   book: Book | undefined;
   price = 0;
   numDays = 0;
-  // para que salga pantalla de confirmación NgbAlbert y showConfirmMessage
-  showConfirmMessage: boolean = false; // cuando se envíe al backen pasará a ser true
+  showConfirmMessage = false;
   reservation: Reservation | undefined;
 
   reservationForm = new FormGroup({
@@ -89,8 +88,7 @@ export class ReservationFormComponent implements OnInit{
       startDate: this.reservationForm.get('startDate')?.value ?? new Date(),
       endDate: this.reservationForm.get('endDate')?.value ?? new Date(),
       price: this.price,
-      book: this.book,
-       
+      book: this.book
     };
 
     // enviar al backend con método POST
@@ -104,7 +102,6 @@ export class ReservationFormComponent implements OnInit{
   }
 
 }
-// para el proyecto de casas
-// user --> User
-// reservation --> Booking
-// book --< House
+// User --> User
+// Reservation --> Contract, Download, Booking, ....
+// Book --> Application, Budget, House, Product, Treatment
