@@ -56,7 +56,8 @@ export class AuthorFormComponent implements OnInit{
           salary: author.salary,
           wikipediaUrl: author.wikipediaUrl
         });
-        // this.authorForm.patchValue(author);
+        // si los nombres de los atributos del objeto author coninciden con los del formulario se cargar así
+        // this.authorForm.reset(author); 
       });
 
     });
