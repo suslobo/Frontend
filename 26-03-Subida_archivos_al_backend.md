@@ -1,7 +1,7 @@
 
 ## SUBIDA DE ARCHIVOS EN BACKEND
 
-1. Instalar:
+1. Instalar en cada proyecto:
 
 npm i -D @types/multer
 

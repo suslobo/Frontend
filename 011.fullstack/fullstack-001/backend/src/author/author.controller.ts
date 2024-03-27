@@ -1,8 +1,9 @@
-import { Body, ConflictException, Controller, Delete, Get, NotFoundException, Param, ParseFloatPipe, ParseIntPipe, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Body, ConflictException, ConsoleLogger, Controller, Delete, Get, NotFoundException, Param, ParseFloatPipe, ParseIntPipe, Post, Put, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { Author } from './author.model';
 import { MoreThanOrEqual, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Console } from 'console';
 
 @Controller('author')
 export class AuthorController {
@@ -74,6 +75,27 @@ export class AuthorController {
 
     }
 
+    // acualizar
+    @Put(':id')
+    @UseInterceptors(FileInterceptor('file'))
+    async update
+        (@UploadedFile() file: Express.Multer.File, 
+        @Param('id', ParseIntPipe) id: number,
+        @Body() author: Author) {
+
+            const exists = await this.authorRepo.existsBy({id: id});
+            if(!exists){
+                throw new NotFoundException('Author not found');
+            }
+                if (file) {
+                // guardar el archivo y obtener la url
+                author.photoUrl = file.filename;
+            }
+            author.id = id; // asigna el id para asegurar que sea numérico y actualice en lugar de intentar insertar
+            return await this.authorRepo.save(author);
+    }
+}
+
 
 
 /*
@@ -123,4 +145,4 @@ export class AuthorController {
         }
     }
 */
-}
+
